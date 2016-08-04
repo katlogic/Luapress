@@ -78,7 +78,9 @@ local function page_links(pages, active)
 
     for k, page in pairs(pages) do
         if not page.hidden then
-            if page.link == active then
+            if page.link:match("^https?://") then
+                output = output .. '<li><a href="' .. page.link .. '">'..page.title..'</a></li>\n'
+            elseif page.link == active then
                 output = output .. '<li class="active"><a href="' .. config.url .. '/' .. config.pages_dir .. '/' .. active .. '">' .. page.title .. '</a></li>\n'
             else
                 output = output .. '<li><a href="' .. config.url .. '/' .. config.pages_dir .. '/' .. page.link .. '">' .. page.title .. '</a></li>\n'

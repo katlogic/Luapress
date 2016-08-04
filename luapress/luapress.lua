@@ -273,14 +273,16 @@ local function build()
     template:set('single', false)
 
     for _, page in ipairs(pages) do
-        local dest_file = util.ensure_destination(page)
+        if not page.link:match("^https?://") then
+            local dest_file = util.ensure_destination(page)
 
-        -- We're a page, so change up page_links
-        template:set('page_links', util.page_links(pages, page.link))
-        template:set('page', page)
+            -- We're a page, so change up page_links
+            template:set('page_links', util.page_links(pages, page.link))
+            template:set('page', page)
 
-        -- Output the file
-        util.write_html(dest_file, page, templates)
+            -- Output the file
+            util.write_html(dest_file, page, templates)
+        end
     end
     template:set('page', false)
 
